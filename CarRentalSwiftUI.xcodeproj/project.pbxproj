@@ -50,6 +50,11 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		6EBABB122FC3AAC600E12081 /* DesignSystem */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		6EC4A7B82FC044D1001A46FD /* CarRentalSwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -103,6 +108,7 @@
 		6EC4A7AD2FC044D1001A46FD = {
 			isa = PBXGroup;
 			children = (
+				6EBABB122FC3AAC600E12081 /* DesignSystem */,
 				6EBABAF42FC39F6700E12081 /* Service */,
 				6EC4A8892FC05E7E001A46FD /* Modules */,
 				6EC4A8882FC05D17001A46FD /* Resources */,
@@ -141,6 +147,7 @@
 			fileSystemSynchronizedGroups = (
 				6EBABAEB2FC39EE400E12081 /* Core */,
 				6EBABAF42FC39F6700E12081 /* Service */,
+				6EBABB122FC3AAC600E12081 /* DesignSystem */,
 				6EC4A7B82FC044D1001A46FD /* CarRentalSwiftUI */,
 				6EC4A8872FC05D01001A46FD /* App */,
 				6EC4A8882FC05D17001A46FD /* Resources */,
