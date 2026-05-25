@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Auth: View {
+struct AuthView: View {
     
     private let viewModel = AuthViewModel()
     
@@ -62,10 +62,21 @@ struct Auth: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToSignIn) {
-                LoginView()
+                LoginView(onSignUp: {
+                    navigateToSignIn = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        navigateToSignUp = true
+                    }
+                })
             }
+
             .navigationDestination(isPresented: $navigateToSignUp) {
-                RegisterView()
+                RegisterView(onSignIn: {
+                    navigateToSignUp = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        navigateToSignIn = true
+                    }
+                })
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -77,6 +88,6 @@ struct Auth: View {
 
 #Preview {
     NavigationStack {
-        Auth()
+        AuthView()
     }
 }

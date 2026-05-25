@@ -2,8 +2,12 @@ import SwiftUI
 
 struct LoginView: View {
     
-    private let viewModel = AuthViewModel()
+    private let viewModel = LoginViewModel()
     @Environment(\.dismiss) private var dismiss
+    var onSignUp: (() -> Void)? // ← добавь
+
+    @State private var fullName = ""
+    @State private var password = ""
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,13 +30,13 @@ struct LoginView: View {
 
             Spacer()
             
-            VStack(spacing: 37) {
+            VStack(alignment: .leading, spacing: 37) {
                 VStack(alignment: .leading) {
-                    Text(viewModel.authWelcome)
+                    Text(viewModel.loginWelcome)
                         .font(.PoppinsBold(36))
                         .foregroundColor(.textBlack)
                     
-                    Text(viewModel.authText)
+                    Text(viewModel.loginText)
                         .font(.PoppinsRegular(16))
                         .foregroundColor(.textGrey)
                 }
@@ -42,7 +46,7 @@ struct LoginView: View {
                 ZStack(alignment: .top) {
                     Rectangle()
                         .fill(Color.white)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .frame(height: 364)
                         .clipShape(
                             UnevenRoundedRectangle(
@@ -50,6 +54,36 @@ struct LoginView: View {
                                 topTrailingRadius: 33
                             )
                         )
+                    
+                    VStack(alignment: .leading, spacing: 16) {
+                        CustomTextField(placeholder: "Full name", text: $fullName)
+                        
+                        CustomTextField(placeholder: "Password", text: $password)
+                        
+                        CustomButtonView(title: "Sign in", typeFill: true) {
+                            
+                        }
+                        
+                        HStack(alignment: .center) {
+                            Text(viewModel.getRegister)
+                                .font(.PoppinsRegular(16))
+                                .foregroundColor(.textGrey)
+                            
+                            Button {
+                                dismiss()        
+                                onSignUp?()
+                            } label: {
+                                Text(viewModel.getRegisterText)
+                                    .font(.PoppinsRegular(16))
+                                    .foregroundColor(.brandClr)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    }
+                    
+                    .padding(.horizontal, 32)
+                    .padding(.top, 62)
                 }
             }
         }
