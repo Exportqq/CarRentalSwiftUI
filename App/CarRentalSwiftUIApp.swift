@@ -11,7 +11,9 @@ import SwiftUI
 struct CarRentalSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            Auth()
+            NavigationStack {
+                Auth()
+            }
         }
     }
 }

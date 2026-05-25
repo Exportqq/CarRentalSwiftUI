@@ -4,6 +4,9 @@ struct Auth: View {
     
     private let viewModel = AuthViewModel()
     
+    @State private var navigateToSignIn = false
+    @State private var navigateToSignUp = false
+    
     var body: some View {
         VStack() {
             
@@ -46,27 +49,34 @@ struct Auth: View {
                         .padding(.horizontal, 32)
                     
                     HStack(spacing: 16) {
-                        CustomButtonView(title: "Sign in", typeFill: true) { }
+                        CustomButtonView(title: "Sign in", typeFill: true) {
+                            navigateToSignIn = true
+                        }
                         
-                        CustomButtonView(title: "Sign up", typeFill: false) { }
+                        CustomButtonView(title: "Sign up", typeFill: false) {
+                            navigateToSignUp = true
+                        }
                     }
                     .padding(.top, 30)
                     .padding(.horizontal, 32)
                 }
             }
-            
+            .navigationDestination(isPresented: $navigateToSignIn) {
+                LoginView()
+            }
+            .navigationDestination(isPresented: $navigateToSignUp) {
+                RegisterView()
+            }
         }
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .top
-            
-        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.backClr)
         .ignoresSafeArea()
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    Auth()
+    NavigationStack {
+        Auth()
+    }
 }
