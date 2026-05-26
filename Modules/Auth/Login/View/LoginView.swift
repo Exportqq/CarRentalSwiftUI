@@ -2,13 +2,10 @@ import SwiftUI
 
 struct LoginView: View {
     
-    private let viewModel = LoginViewModel()
+    @StateObject private var viewModel = LoginViewModel()
     @Environment(\.dismiss) private var dismiss
-    var onSignUp: (() -> Void)? // ← добавь
+    var onSignUp: (() -> Void)?
 
-    @State private var fullName = ""
-    @State private var password = ""
-    
     var body: some View {
         VStack(alignment: .leading) {
             Button {
@@ -56,13 +53,32 @@ struct LoginView: View {
                         )
                     
                     VStack(alignment: .leading, spacing: 16) {
-                        CustomTextField(placeholder: "Full name", text: $fullName)
-                        
-                        CustomTextField(placeholder: "Password", text: $password)
-                        
-                        CustomButtonView(title: "Sign in", typeFill: true) {
-                            
+                        CustomTextField(
+                            placeholder: "Full name",
+                            text: $viewModel.username
+                        )
+
+                        CustomTextField(
+                            placeholder: "Password",
+                            text: $viewModel.password
+                        )
+
+                        if let error = viewModel.error {
+                            Text(error)
+                                .foregroundColor(.red)
+                                .font(.caption)
                         }
+
+                        CustomButtonView(
+                            title: viewModel.isLoading
+                            ? "Loading..."
+                            : "Sign in",
+                            typeFill: true
+                        ) {
+
+                            viewModel.login()
+                        }
+                        .disabled(!viewModel.isFormValid || viewModel.isLoading)
                         
                         HStack(alignment: .center) {
                             Text(viewModel.getRegister)
