@@ -3,6 +3,8 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var loading = LoadingState()
+    
     @Environment(\.dismiss) private var dismiss
     var onSignUp: (() -> Void)?
 
@@ -70,15 +72,11 @@ struct LoginView: View {
                         }
 
                         CustomButtonView(
-                            title: viewModel.isLoading
-                            ? "Loading..."
-                            : "Sign in",
+                            title: "Sign in",  
                             typeFill: true
                         ) {
-
-                            viewModel.login()
+                            viewModel.login(loading: loading)
                         }
-                        .disabled(!viewModel.isFormValid || viewModel.isLoading)
                         
                         HStack(alignment: .center) {
                             Text(viewModel.getRegister)
@@ -108,6 +106,7 @@ struct LoginView: View {
         .background(Color.backClr)
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
+        .loader(loading)
     }
 }
 

@@ -1,18 +1,21 @@
-//
-//  CarRentalSwiftUIApp.swift
-//  CarRentalSwiftUI
-//
-//  Created by Michael Saakyan on 22.05.2026.
-//
-
 import SwiftUI
 
 @main
 struct CarRentalSwiftUIApp: App {
+    
+    @StateObject private var session = SessionManager.shared
+    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                AuthView()
+            Group {
+                if session.isAuthorized {
+                    TabBarController()
+                } else {
+                    AuthView()
+                }
+            }
+            .onAppear {
+                session.checkAuth()
             }
         }
     }

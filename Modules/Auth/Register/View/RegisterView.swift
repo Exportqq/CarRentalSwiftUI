@@ -3,6 +3,7 @@ import SwiftUI
 struct RegisterView: View {
 
     @StateObject private var viewModel = RegisterViewModel()
+    @StateObject private var loading = LoadingState()
 
     @Environment(\.dismiss) private var dismiss
     var onSignIn: (() -> Void)?
@@ -65,8 +66,11 @@ struct RegisterView: View {
                             text: $viewModel.password
                         )
 
-                        CustomButtonView(title: "Sign up", typeFill: true) {
-                            viewModel.register()
+                        CustomButtonView(
+                            title: "Sign up",
+                            typeFill: true
+                        ) {
+                            viewModel.register(loading: loading)
                         }
                         .disabled(!viewModel.isFormValid || viewModel.isLoading)
 
@@ -100,10 +104,11 @@ struct RegisterView: View {
         .background(Color.backClr)
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
+        .loader(loading)
 
         .onChange(of: viewModel.isSuccess) { success in
             if success {
-                dismiss()
+                SessionManager.shared.isAuthorized = true
             }
         }
     }

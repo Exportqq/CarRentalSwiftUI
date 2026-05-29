@@ -38,18 +38,19 @@ final class RegisterViewModel: RegisterViewModelInputProtocol, ObservableObject 
     private func bind() {
         Publishers.CombineLatest($username, $password)
             .map { username, password in
-                username.count > 3 && password.count > 5
+                username.count > 3 && password.count > 3
             }
             .assign(to: &$isFormValid)
     }
 
-    func register() {
+    func register(loading: LoadingState) {
         guard isFormValid else { return }
 
         isLoading = true
         error = nil
 
         Task {
+            loading.show()
             do {
                 _ = try await registerManager.register(
                     username: username,
@@ -72,6 +73,7 @@ final class RegisterViewModel: RegisterViewModelInputProtocol, ObservableObject 
             }
 
             self.isLoading = false
+            loading.hide()
         }
     }
 }

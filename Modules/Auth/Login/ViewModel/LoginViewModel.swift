@@ -38,13 +38,14 @@ final class LoginViewModel: LoginViewModelInputProtocol, ObservableObject {
             .assign(to: &$isFormValid)
     }
 
-    func login() {
+    func login(loading: LoadingState) {
         guard isFormValid else { return }
 
         isLoading = true
         error = nil
 
         Task {
+            loading.show() 
             do {
                 let response = try await loginManager.login(
                     username: username,
@@ -61,6 +62,7 @@ final class LoginViewModel: LoginViewModelInputProtocol, ObservableObject {
             }
 
             self.isLoading = false
+            loading.hide()
         }
     }
 }
