@@ -6,7 +6,7 @@ protocol ProfileViewModelInputProtocol: AnyObject {
     var userPublisher: Published<ProfileModel?>.Publisher { get }
 }
 
-final class ProfileViewModel: ProfileViewModelInputProtocol {
+final class ProfileViewModel: ProfileViewModelInputProtocol, ObservableObject {
     
     @Published private(set) var user: ProfileModel?
     @Published var isLoading: Bool = false

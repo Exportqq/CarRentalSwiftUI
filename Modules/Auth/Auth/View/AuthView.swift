@@ -8,59 +8,66 @@ struct AuthView: View {
     @State private var navigateToSignUp = false
     
     var body: some View {
-        VStack() {
-            
-            Image("logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 105, height: 70)
-                .padding(.top, 211)
-            
-            Text(viewModel.brandName)
-                .font(.PoppinsBold(20))
-                .foregroundColor(.textGrey)
-            
-            Spacer()
-            
-            ZStack(alignment: .top) {
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 364)
-                    .clipShape(
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 33,
-                            topTrailingRadius: 33
-                        )
-                    )
+        NavigationStack {
+            VStack() {
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(viewModel.authWelcome)
-                        .font(.PoppinsBold(36))
-                        .foregroundColor(.textBlack)
-                        .padding(.top, 42)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 32)
+                Image("logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 105, height: 70)
+                    .padding(.top, 211)
+                
+                Text(viewModel.brandName)
+                    .font(.PoppinsBold(20))
+                    .foregroundColor(.textGrey)
+                
+                Spacer()
+                
+                ZStack(alignment: .top) {
+                    Rectangle()
+                        .fill(Color.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 364)
+                        .clipShape(
+                            UnevenRoundedRectangle(
+                                topLeadingRadius: 33,
+                                topTrailingRadius: 33
+                            )
+                        )
                     
-                    Text(viewModel.authText)
-                        .font(.PoppinsRegular(16))
-                        .foregroundColor(.textGrey)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 32)
-                    
-                    HStack(spacing: 16) {
-                        CustomButtonView(title: "Sign in", typeFill: true) {
-                            navigateToSignIn = true
-                        }
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(viewModel.authWelcome)
+                            .font(.PoppinsBold(36))
+                            .foregroundColor(.textBlack)
+                            .padding(.top, 42)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 32)
                         
-                        CustomButtonView(title: "Sign up", typeFill: false) {
-                            navigateToSignUp = true
+                        Text(viewModel.authText)
+                            .font(.PoppinsRegular(16))
+                            .foregroundColor(.textGrey)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 32)
+                        
+                        HStack(spacing: 16) {
+                            CustomButtonView(title: "Sign in", typeFill: true) {
+                                navigateToSignIn = true
+                            }
+                            
+                            CustomButtonView(title: "Sign up", typeFill: false) {
+                                navigateToSignUp = true
+                            }
                         }
+                        .padding(.top, 30)
+                        .padding(.horizontal, 32)
                     }
-                    .padding(.top, 30)
-                    .padding(.horizontal, 32)
                 }
+                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color.backClr)
+            .ignoresSafeArea()
+            .navigationBarBackButtonHidden(true)
             .navigationDestination(isPresented: $navigateToSignIn) {
                 LoginView(onSignUp: {
                     navigateToSignIn = false
@@ -79,10 +86,6 @@ struct AuthView: View {
                 })
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.backClr)
-        .ignoresSafeArea()
-        .navigationBarBackButtonHidden(true)
     }
 }
 

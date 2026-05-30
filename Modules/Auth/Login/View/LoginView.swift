@@ -107,6 +107,7 @@ struct LoginView: View {
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
         .loader(loading)
+        
     }
 }
 

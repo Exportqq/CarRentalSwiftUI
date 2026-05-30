@@ -2,22 +2,35 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    private let viewModel = AuthViewModel()
+    @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
         VStack() {
             
-            Image("logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 105, height: 70)
-                .padding(.top, 211)
+            ZStack() {
+                Rectangle()
+                    .foregroundColor(.brandClr)
+                    .frame(maxWidth: .infinity, maxHeight: 280)
+                    .clipShape(
+                        UnevenRoundedRectangle(
+                            bottomLeadingRadius: 33,
+                            bottomTrailingRadius: 33
+                        )
+                    )
+                
+                Text(viewModel.user?.username ?? "")
+                    .font(Font.PoppinsBold(20))
+                    .foregroundColor(.white)
+            }
             
-            Text("Profile")
-                .font(.PoppinsBold(20))
-                .foregroundColor(.textGrey)
-            
-            Spacer()
+            VStack() {
+                CustomButtonView(
+                    title: "Logout",
+                    typeFill: true
+                ) {
+                    SessionManager.shared.logout()
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Color.backClr)
